@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Amplify } from 'aws-amplify';
-import outputs from "../../../amplify_outputs.json";
+// import outputs from "../../../amplify_outputs.json";
 import { AmplifyAuthenticatorModule, AuthenticatorService } from '@aws-amplify/ui-angular';
 import { signInWithRedirect } from 'aws-amplify/auth';
 
@@ -8,7 +8,7 @@ import { signInWithRedirect } from 'aws-amplify/auth';
 //   provider: 'Google'
 // });
 
-Amplify.configure(outputs);
+// Amplify.configure(outputs);
 
 
 @Component({
@@ -21,6 +21,6 @@ Amplify.configure(outputs);
 export class AuthComponent {
   title = 'amplify-angular-template';
   constructor(public authenticator: AuthenticatorService) {
-    Amplify.configure(outputs);
+    // Amplify.configure(outputs);
   }
 }

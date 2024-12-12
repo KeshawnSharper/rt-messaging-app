@@ -6,15 +6,17 @@ import { RouterOutlet } from '@angular/router';
 // import { AmplifyAuthenticatorModule, AuthenticatorService } from '@aws-amplify/ui-angular';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { FooterComponent } from "./footer/footer.component";
+import { SearchComponent } from './search/search.component';
 
 // Amplify.configure(outputs);
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet,NavbarComponent, FooterComponent],})
+  imports: [RouterOutlet,NavbarComponent, FooterComponent,SearchComponent],})
 
   
 export class AppComponent {
