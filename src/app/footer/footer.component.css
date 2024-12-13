@@ -1,12 +1,15 @@
 nav{
     background-color:linear-gradient(
-    250deg,
+    400deg,
     rgb(255, 255, 255),
-    rgb(117, 81, 194));
+    rgb(117, 81, 194)
+    
+    );
     color: black;
     text-align: center;
     align-items: center;
     justify-content: center;
+    height: 20px;
 }
 
 .activebutton{
