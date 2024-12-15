@@ -3,6 +3,7 @@ import { Amplify } from 'aws-amplify';
 // import outputs from "../../../amplify_outputs.json";
 import { AmplifyAuthenticatorModule, AuthenticatorService } from '@aws-amplify/ui-angular';
 import { signInWithRedirect } from 'aws-amplify/auth';
+import {getAuth,signInWithPopup,signInWithEmailAndPassword,GoogleAuthProvider} from "firebase/auth"
 
 // await signInWithRedirect({
 //   provider: 'Google'

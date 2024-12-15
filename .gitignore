@@ -45,3 +45,8 @@ Thumbs.db
 .amplify
 amplify_outputs*
 amplifyconfiguration*
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
