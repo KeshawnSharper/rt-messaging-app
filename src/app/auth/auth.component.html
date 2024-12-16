@@ -1,12 +1,52 @@
-<amplify-authenticator
-[socialProviders]="['google']"
+<!-- <div class="container">
+<h3>{{component}}</h3>
 
->
-    <ng-template
-      amplifySlot="authenticated"
-      let-user="user"
-      let-signOut="signOut"
-    >
-      <button (click)="signOut()">Sign Out</button>
-    </ng-template>
-  </amplify-authenticator>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p class="error">{{error}}</p>
+
+  <input type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" formControlName="email">
+
+  <input type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" formControlName="password">
+<button type="submit">Submit</button>
+</form>
+
+<u><a (click)="changeComponent()">Link to {{component === "Register" ? "Login" : "Register"}} Here</a></u>
+<button (click)="onGoogleSubmit()" class="btn btn-dark  row fs-6 sign-in-button" width="700px" height="300px">
+  {{component}} with  <i class="fa fa-google" style="font-size:16px">
+    </i>
+  </button>
+</div> -->
+<div style="text-align: center;">
+<h2 class="floating"> Authenication</h2>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="card px-1 py-4">
+      <div class="card-body">
+        <p class="error">{{error}}</p>
+          <h4 class="information mt-4" >{{component}}</h4>
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="form-group">
+                      <!-- <label for="name">Name</label> --> <input class="form-control" type="text" placeholder="Email" formControlName="email"> </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="form-group">
+                      <div class="input-group"> <input class="form-control" type="password" placeholder="Password" formControlName="password"> </div>
+                  </div>
+              </div>
+          </div>
+          <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"> <small class="agree-text">You can make anything look official when you paste</small> <a href="#" class="terms">Terms & Conditions</a></div> <button type="submit">Submit</button> <button (click)="onGoogleSubmit()" >
+            {{component}} with  <i class="fa fa-google" style="font-size:16px">
+              </i>
+            </button>
+
+      </div>
+  </div>
+  <u><a (click)="changeComponent()">Link to {{component === "Register" ? "Login" : "Register"}} Here</a></u>
+
+  </form>
+  
+</div>
+</div>
