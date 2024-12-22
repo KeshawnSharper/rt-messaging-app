@@ -22,6 +22,7 @@
     "@aws-amplify/ui-angular": "^5.0.33",
     "amplify-angular-template": "file:",
     "aws-amplify": "^6.6.6",
+    "axios": "^1.7.9",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.8.1",
     "tslib": "^2.3.0",

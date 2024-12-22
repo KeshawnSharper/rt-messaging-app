@@ -1,4 +1,4 @@
-<!-- <div>
+<div>
     <h1>Real-Time Chat</h1>
     <div>
       <input [(ngModel)]="newMessage" placeholder="Enter your message" />
@@ -8,12 +8,34 @@
       <h2>Messages:</h2>
       <ul>
         @for ( message of messages; track $index) {
-        <li>{{ message }}</li>
-        }
+        <li>{{ message.text }}</li> 
+        <button (click)="deleteMessage(message)">Delete</button>
+        <button (click)="selectMessage(message)" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
+
+      }
       </ul>
     </div>
-  </div> -->
-  <div class="container">
+  </div>
+
+  <!-- modal  -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Message</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input [(ngModel)]="selectedMessage.text" placeholder="Enter your message" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" (click)="dontUpdateMessage()" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-dark" (click)="updateMessage()" data-bs-dismiss="modal">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- <div class="container">
     <h3 class=" text-center">Messaging</h3>
     <div class="messaging">
           <div class="inbox_msg">
@@ -154,4 +176,4 @@
           </div>
           
                   
-        </div></div>
+        </div></div>  -->
