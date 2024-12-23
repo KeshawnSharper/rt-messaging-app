@@ -57,9 +57,9 @@
                 @for (key of lastMessageObjKeys ; track key){
                 <div class="chat_list active_chat" (click)="selectUserMessages(key)">
                   <div class="chat_people">
-                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="chat_img"> <img src={{lastMessagesObj[key].image}} alt="sunil"> </div>
                     <div class="chat_ib">
-                      <h5>{{ lastMessagesObj[key].email }} <span class="chat_date">Dec 25</span></h5>
+                      <h5>{{ lastMessagesObj[key].display_name  }} <span class="chat_date">Dec 25</span></h5>
                       <p>{{lastMessagesObj[key].text}}</p>
                     </div>
                   </div>
@@ -73,13 +73,13 @@
                   
                   @for (msg of selectedMessages ; track msg.id){
                     
-                  <div class="received_msg" *ngIf="msg.receiver_email !== user.email">
-                    <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                  <div class="received_msg" *ngIf="msg.receiver_email == user.email">
+                    <div class="incoming_msg_img"> <img src={{msg.image}} alt="sunil"> </div>
                     <div class="received_withd_msg">
                       <p>{{msg.text}}</p>
                       <span class="time_date"> {{ msg.date_sent}}</span></div>
                   </div>
-                <div class="outgoing_msg"  *ngIf="msg.sender_email !== user.email">
+                <div class="outgoing_msg"  *ngIf="msg.sender_email == user.email">
                   <div class="sent_msg">
                     <p>{{msg.text}}</p>
                     <span class="time_date">{{ msg.date_sent }}</span> </div>

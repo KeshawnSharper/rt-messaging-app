@@ -36,6 +36,26 @@ export class AuthComponent {
     }
     return result
 }
+saveUser(body:any){
+
+  fetch('http://127.0.0.1:8000/users/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data)
+    this.router.navigate(['/search']);
+
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('There was a problem with the fetch operation:', error);
+  })
+}
    loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(this.auth, provider).then((data) => {
@@ -55,8 +75,13 @@ export class AuthComponent {
     createUserWithEmailAndPassword(this.auth,email,password)
     .then((data:any) => {
       localStorage.setItem("user",JSON.stringify(data.user))
+      this.saveUser({
+        "display_name":data.user.displayName || data.user.email,
+        "email":data.user.email,
+        "image":data.user.photoURL || ""
+    })
       console.log(data.user)
-      this.router.navigate(['/search']);
+      
     })
     .catch(err => {
       console.log(err.code)
@@ -66,10 +91,14 @@ export class AuthComponent {
 
  registerWithGoogle = () => {
   const provider = new GoogleAuthProvider()
-  signInWithPopup(this.auth,provider).then((data) => {
+  signInWithPopup(this.auth,provider).then((data:any) => {
     console.log(data.user)
       localStorage.setItem("user",JSON.stringify(data.user))
-      this.router.navigate(['/search']);
+    //   this.saveUser({
+    //     "display_name":data.user.displayName || data.user.email,
+    //     "email":data.user.email,
+    //     "image":data.user.photoURL || ""
+    // })
       
     })
     .catch(err => {
@@ -88,10 +117,10 @@ export class AuthComponent {
 
   onGoogleSubmit = () => {
       if (this.component === "Register"){
-        this.loginWithGoogle()
+        this.registerWithGoogle()
       }
       else{
-        this.registerWithGoogle()
+        this.loginWithGoogle()
       }
     
   }
