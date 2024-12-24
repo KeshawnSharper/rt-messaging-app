@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterModule} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule} from '@angular/router';
 import { LocalStorageService } from '../local-storage.service';
 import {getAuth} from "firebase/auth"
 
@@ -14,7 +14,7 @@ import {getAuth} from "firebase/auth"
 export class NavbarComponent {
   image:any= localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || '{}').photoURL : "../../assets/9334228.jpg"
   checkUser= signal(localStorage.getItem("user"))
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(private localStorageService: LocalStorageService,private router: Router) {}
 
   ngOnInit() {
     this.localStorageService.storageChange$.subscribe((event: StorageEvent) => {
@@ -23,6 +23,10 @@ export class NavbarComponent {
         this.image = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || '{}').photoURL : "../../assets/9334228.jpg"
       
     });
+  }
+  logout(){
+    localStorage.clear()
+    this.router.navigate(['/auth']);
   }
 
 }
