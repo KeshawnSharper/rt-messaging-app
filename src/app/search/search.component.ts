@@ -4,6 +4,8 @@ import { SearchService } from '../search.service';
 import { FormsModule } from '@angular/forms';
 import { text } from 'express';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'search-root',
@@ -25,7 +27,7 @@ export class SearchComponent{
   users: any[] = []
   selectedReceiever:string = ""
 
-  constructor(private socketService: SearchService) {
+  constructor(private socketService: SearchService,private router: Router) {
                          
     this.messageSubscription = this.socketService
       .on('message')
@@ -59,6 +61,10 @@ export class SearchComponent{
   }
 
   ngOnInit() { 
+    if (!localStorage.getItem("user")){
+      this.router.navigate(['/auth']);
+    }
+    else{
   fetch(`http://127.0.0.1:8000/messages/${this.user.email}`)
   .then(response => response.json())
   .then(data => {
@@ -70,6 +76,7 @@ export class SearchComponent{
     console.log("hello")
 
 } 
+  }
 loadUsers(messages:any=null){
   messages = this.messages.length > 0 ? this.messages : messages
   console.log("kelly",messages)
@@ -91,6 +98,7 @@ loadUsers(messages:any=null){
   })
   .catch(error => console.error('Error:', error))
 }
+
 
 saveUser(body:any){
 

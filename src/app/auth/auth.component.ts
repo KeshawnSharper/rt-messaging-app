@@ -26,6 +26,11 @@ export class AuthComponent {
   constructor(private router: Router) {
     // Amplify.configure(outputs);
   }
+  ngOnInit() { 
+    if (localStorage.getItem("user")){
+      this.router.navigate(['/search']);
+    }
+  }
 
   makeFirebaseErrorString = (string:string) => {
     let newString = string
@@ -63,6 +68,7 @@ saveUser(body:any){
         localStorage.setItem("user",JSON.stringify(data.user))
         console.log(data.user)
         this.router.navigate(['/search']);
+        window.location.reload()
       })
 
 
