@@ -10,7 +10,7 @@ export class SearchService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://rt-messaging-socket.onrender.com');
   }
 
   emit(event: string, data: any) {
