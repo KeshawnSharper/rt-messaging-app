@@ -42,8 +42,8 @@ export class AuthComponent {
     return result
 }
 saveUser(body:any){
-
-  fetch('http://127.0.0.1:8000/users/', {
+  console.log(body)
+  fetch('https://ionqml774fyjaxz5x6qcsfdhwq0qzaaf.lambda-url.us-east-1.on.aws/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
