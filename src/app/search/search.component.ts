@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component,  OnInit,ViewChild, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SearchService } from '../search.service';
 import { FormsModule } from '@angular/forms';
@@ -26,9 +26,12 @@ export class SearchComponent{
   selectedMessages: any[] = []
   users: any[] = []
   selectedReceiever:string = ""
+  @ViewChild('inboxChat',{static:true}) inboxChat?: ElementRef<HTMLDivElement>;
+
 
   constructor(private socketService: SearchService,private router: Router) {
                          
+
     this.messageSubscription = this.socketService
       .on('message')
       .subscribe((data:any) => {
@@ -59,15 +62,28 @@ export class SearchComponent{
 
       });
   }
+  ngAfterViewInit() {
+    // Accessing the DOM element directly
+    console.log(this.inboxChat?.nativeElement);
 
+    // Modifying the DOM element
+    if (this.inboxChat?.nativeElement)
+      this.inboxChat.nativeElement.scrollTop =
+        this.inboxChat?.nativeElement.scrollHeight;
+    
+  }
   ngOnInit() { 
     if (!localStorage.getItem("user")){
       this.router.navigate(['/auth']);
     }
     else{
-  fetch(`http://127.0.0.1:8000/messages/${this.user.email}`)
+      if (this.inboxChat?.nativeElement)
+        this.inboxChat.nativeElement.scrollTop =
+          this.inboxChat?.nativeElement.scrollHeight;
+  fetch("https://3jdoxpe4rixlwbnjsanr42kxjm0nwtkp.lambda-url.us-east-1.on.aws/"+this.user.email)
   .then(response => response.json())
   .then(data => {
+    console.log(data)
     this.messages = data
     this.loadUsers(data)
 
@@ -77,10 +93,12 @@ export class SearchComponent{
 
 } 
   }
+
+
 loadUsers(messages:any=null){
   messages = this.messages.length > 0 ? this.messages : messages
   console.log("kelly",messages)
-  fetch(`http://127.0.0.1:8000/users/`)
+  fetch(`https://net2s2umsjoql7gtuua64xy5hm0oaewq.lambda-url.us-east-1.on.aws/`)
   .then(response => response.json())
   .then((data:any[]) => {
     this.users = data  
@@ -102,7 +120,7 @@ loadUsers(messages:any=null){
 
 saveUser(body:any){
 
-  fetch('http://127.0.0.1:8000/users/', {
+  fetch('https://ionqml774fyjaxz5x6qcsfdhwq0qzaaf.lambda-url.us-east-1.on.aws/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -170,7 +188,7 @@ selectMessage(message:any){
     console.log(this.selectedReceiever)
     let body = {text:this.newMessage,sender_email:this.user.email,receiver_email:this.selectedReceiever}
     console.log(this.newMessage)
-    fetch('http://127.0.0.1:8000/messages/', {
+    fetch('https://ukhro6zqn7koqhpz4w7c256akm0camrd.lambda-url.us-east-1.on.aws/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -191,7 +209,7 @@ selectMessage(message:any){
 
   deleteMessage(message:any) {
     console.log(this.newMessage)
-    fetch('http://127.0.0.1:8000/messages/', {
+    fetch('https://ibvkv6hosj5mk4wtimktij4nbe0yyojx.lambda-url.us-east-1.on.aws/', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -209,21 +227,21 @@ selectMessage(message:any){
   }
 
   updateMessage() {
-    console.log(this.newMessage)
-    fetch('http://127.0.0.1:8000/messages/', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.selectedMessage)
-    })
-    .then(data => {
-      this.socketService.emit('message', {message:this.selectMessage,function:"edit"});
-    })
-    .catch(error => {
-      // Handle errors
-      console.error('There was a problem with the fetch operation:', error);
-    });
+    // console.log(this.newMessage)
+    // fetch('http://127.0.0.1:8000/messages/', {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(this.selectedMessage)
+    // })
+    // .then(data => {
+    //   this.socketService.emit('message', {message:this.selectMessage,function:"edit"});
+    // })
+    // .catch(error => {
+    //   // Handle errors
+    //   console.error('There was a problem with the fetch operation:', error);
+    // });
    
   }
 
@@ -250,7 +268,9 @@ convertDate(d:Date){
       mess.sender_email === key || mess.receiver_email === key
     ))
     this.selectedMessages = filteredList.sort((a:any,b:any) => a.id - b.id ).map(msg => msg = {...msg,date_sent: this.convertDate(msg.date_sent),image:key in dummy ? dummy[key].image : "https://ptetutorials.com/images/user-profile.png"})
-
+    if (this.inboxChat?.nativeElement){
+      this.inboxChat.nativeElement.scrollTo(0, this.inboxChat.nativeElement.scrollHeight);
+      }
   }
 
 }
