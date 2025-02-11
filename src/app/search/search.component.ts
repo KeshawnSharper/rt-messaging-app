@@ -83,10 +83,9 @@ export class SearchComponent{
   fetch("https://3jdoxpe4rixlwbnjsanr42kxjm0nwtkp.lambda-url.us-east-1.on.aws/"+this.user.email)
   .then(response => response.json())
   .then(data => {
-    console.log(data)
-    this.messages = data
-    this.loadUsers(data)
-
+    console.log("messages",this.user.email)
+    this.messages = data.filter((message:any) => message.receiver_email === this.user.email || message.sender_email === this.user.email)
+    this.loadUsers(this.messages)
   })
   .catch(error => console.error('Error:', error));
     console.log("hello")
